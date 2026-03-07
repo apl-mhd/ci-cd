@@ -38,3 +38,11 @@ Thumbs.db
 # Coverage reports
 htmlcov/
 .coverage
+
+volumes/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+git rm -r --cached core/settings/__pycache__/

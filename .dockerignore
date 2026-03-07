@@ -8,10 +8,3 @@ media/
 
 */venv
 
-volumes/
-
-# Python bytecode
-__pycache__/
-*.pyc
-
-git rm -r --cached core/settings/__pycache__/
