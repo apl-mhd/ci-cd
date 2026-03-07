@@ -1,0 +1,40 @@
+# Python compiled files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+*.env
+
+# Django stuff
+*.sqlite3
+db.sqlite3
+/media/
+/staticfiles/
+
+# Django migrations (optional: include if you want to exclude them)
+*/migrations/*.pyc
+*/migrations/*.py
+*/migrations/__pycache__/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
