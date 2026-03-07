@@ -39,10 +39,9 @@ Thumbs.db
 htmlcov/
 .coverage
 
-volumes/
 
-# Python bytecode
 __pycache__/
 *.pyc
 
-git rm -r --cached core/settings/__pycache__/
+
+data/db/
