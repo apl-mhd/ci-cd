@@ -21,7 +21,6 @@ jobs:
       - name: Run Flake8 Linter
         run: flake8 core/views.py
 
-
   # build:
   #   runs-on: ubuntu-latest
 
