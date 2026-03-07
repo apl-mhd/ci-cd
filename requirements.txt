@@ -4,4 +4,6 @@ sqlparse==0.5.5
 psycopg2-binary==2.9.11
 python-dotenv==1.2.2
 pytest==9.0.2
+flake8==7.3.0
+
 
