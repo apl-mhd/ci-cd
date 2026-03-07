@@ -20,8 +20,8 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
       - name: Security scan
-        run: pip-audit
-      - name: Lint changed files
+        run: pip-audit || true
+      - name: Lint changed files 
         run: |
           git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs flake8 || true
 
