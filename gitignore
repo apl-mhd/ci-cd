@@ -44,4 +44,5 @@ __pycache__/
 *.pyc
 
 
-data/db/
+data/
+postgres_data/

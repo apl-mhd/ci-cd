@@ -8,4 +8,3 @@ def home(request):
 
 
 
-    
