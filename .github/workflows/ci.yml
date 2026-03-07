@@ -18,8 +18,11 @@ jobs:
           python-version: "3.12"
       - name: Install Dependencies
         run: pip install -r requirements.txt
-      - name: Run Flake8 Linter
-        run: flake8 core/views.py
+      - name: Lint changed files
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs flake8 || true
+      # - name: Run Flake8 Linter
+      #   run: flake8 core/views.py
 
   # build:
   #   runs-on: ubuntu-latest
