@@ -57,6 +57,7 @@ jobs:
             echo "Docker pull finished with status $?"
             
             
+            
 
      
 # docker stop myapp-container || true
