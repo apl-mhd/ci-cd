@@ -43,6 +43,10 @@ jobs:
           echo "Pushing the image..."
           docker push ${{secrets.DOCKER_USERNAME}}/myapp:latest
 
+
+  deploy:
+    runs-on: self-hosted 
+    steps:
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
