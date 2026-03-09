@@ -48,8 +48,11 @@ jobs:
           username: ${{secrets.EC2_USER}}
           key: ${{secrets.EC2_SSH_KEY}}
           scripts: |
+            echo "Logging into Docker on EC2..."
+            docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
             echo "Pulling the image..."
             docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest
+            echo "Docker pull finished with status $?"
             
             
 
