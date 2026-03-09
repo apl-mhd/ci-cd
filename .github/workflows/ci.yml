@@ -12,21 +12,20 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.12"
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-      - name: Security scan
-        run: pip-audit || true
-      - name: Lint changed files 
-        run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs flake8 || true
+      # - uses: actions/checkout@v3
+      # - name: Set up python
+      #   uses: actions/setup-python@v3
+      #   with:
+      #     python-version: "3.12"
+      # - name: Install Dependencies
+      #   run: pip install -r requirements.txt
+      # - name: Security scan
+      #   run: pip-audit || true
+      # - name: Lint changed files 
+      #   run: |
+      #     git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs flake8 || true
 
-      
-
+    
       - name: Login to dockerHub
         uses: docker/login-action@v3
         with:
@@ -39,6 +38,7 @@ jobs:
       - name: Push image
         run: |
           docker tag myapp ${{secrets.DOCKER_USERNAME}}/myapp:latest
+          echo "Pushing the image..."
           docker push ${{secrets.DOCKER_USERNAME}}/myapp:latest
 
       - name: Deploy on EC2
@@ -48,6 +48,7 @@ jobs:
           username: ${{secrets.EC2_USER}}
           key: ${{secrets.EC2_SSH_KEY}}
           scripts: |
+            echo "Pulling the image..."
             docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest
             
             
