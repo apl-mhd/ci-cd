@@ -49,9 +49,10 @@ jobs:
           key: ${{secrets.EC2_SSH_KEY}}
           scripts: |
             docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest
-            docker stop myapp-container || true
-            docker rm myapp-container || true
-            docker run -d -p 80:5000 --name myapp-container ${{secrets.DOCKER_USERNAME}}/myapp:latest
+            
             
 
      
+# docker stop myapp-container || true
+#             docker rm myapp-container || true
+#             docker run -d -p 80:5000 --name myapp-container ${{secrets.DOCKER_USERNAME}}/myapp:latest
