@@ -3,9 +3,9 @@ services:
     image: aplmahmud/myapp:latest
     container_name: myapp-web
     restart: always
-    build: .
-    volumes:
-      - .:/app
+    # build: .
+    # volumes:
+    #   - .:/app
     ports:
       - "8000:8000"
 
