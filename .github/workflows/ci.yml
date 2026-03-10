@@ -55,6 +55,14 @@ jobs:
             echo "Pulling the image..."
             docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest
             echo "Docker pull finished with status $?"
+            echo "Stop running container"
+            
+            docker stop myapp-container
+            docker rm myapp
+            echo "Remove container"
+            docker rmi ${{secrets.DOCKER_USERNAME}}/myapp:latest
+
+            
 
             
             
