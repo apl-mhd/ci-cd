@@ -1,0 +1,67 @@
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Dependencies
+        run: |
+         python -m pip install --upgrade pip
+         pip install -r requirements.txt
+      # - name: Security scan
+      #   run: pip-audit || true
+      # - name: Lint changed files 
+      #   run: |
+      #     git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$' | xargs flake8 || true
+
+    
+      - name: Login to dockerHub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build docker image
+        run: docker build -t myapp:latest .
+
+      - name: Push image
+        run: |
+          docker tag myapp ${{secrets.DOCKER_USERNAME}}/myapp:latest
+          echo "Pushing the image..."
+          docker push ${{secrets.DOCKER_USERNAME}}/myapp:latest
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.EC2_HOST}}
+          username: ${{secrets.EC2_USER}}
+          key: ${{secrets.EC2_SSH_KEY}}
+          script: |
+            echo "Logging into Docker on EC2..."
+            docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+            
+           
+            echo "Stop running container"  
+            docker rm  -f myapp-container || echo "No container found, skipping.."
+
+            echo "Remove container"
+            docker rmi ${{secrets.DOCKER_USERNAME}}/myapp:latest || echo "No image found"
+
+            echo "Pulling the image..."
+            docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest || true
+
+            docker run -d -p 8000:8000 --name myapp-container --env-file .env --network my_network aplmahmud/myapp
+
