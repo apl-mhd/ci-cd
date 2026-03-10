@@ -52,15 +52,15 @@ jobs:
           script: |
             echo "Logging into Docker on EC2..."
             docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-            echo "Pulling the image..."
-            docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest
-            echo "Docker pull finished with status $?"
-            echo "Stop running container"
             
-            docker stop myapp-container
-            docker rm myapp
+            echo "Pulling the image..."
+            docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest || true
+            
+            echo "Stop running container"  
+            docker rm  -f myapp-container || echo "No container found, skipping.."
+
             echo "Remove container"
-            docker rmi ${{secrets.DOCKER_USERNAME}}/myapp:latest
+            docker rmi ${{secrets.DOCKER_USERNAME}}/myapp:latest || echo "No image found"
 
             
 

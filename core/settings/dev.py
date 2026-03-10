@@ -3,9 +3,11 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["35.172.195.165"]
+# ALLOWED_HOSTS = ["35.172.195.165"]
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split(",")
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "").split(",")
+ALLOWED_HOSTS = ['*']
+
 
 # DATABASES = {
 #     'default': {
