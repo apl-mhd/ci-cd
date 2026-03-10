@@ -53,14 +53,19 @@ jobs:
             echo "Logging into Docker on EC2..."
             docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
             
-            echo "Pulling the image..."
-            docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest || true
-            
+           
             echo "Stop running container"  
             docker rm  -f myapp-container || echo "No container found, skipping.."
 
             echo "Remove container"
             docker rmi ${{secrets.DOCKER_USERNAME}}/myapp:latest || echo "No image found"
+
+            echo "Pulling the image..."
+            docker pull ${{secrets.DOCKER_USERNAME}}/myapp:latest || true
+
+            docker run -d -p 8000:8000 --name myapp-container --env-file .env --network my_network aplmahmud/myapp
+
+
 
             
 
